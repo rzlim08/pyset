@@ -2,4 +2,7 @@
 import argparse
 
 if __name__ == "__main__":
-    argparse.ArgumentParser(description= "")
+    parser = argparse.ArgumentParser(description="performs set operations on csvs")
+    parser.add_argument("csv", nargs="*")
+
+    print(parser.parse_args())
