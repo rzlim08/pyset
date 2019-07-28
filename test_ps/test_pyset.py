@@ -63,3 +63,24 @@ class TestPySet(unittest.TestCase):
         intersect = self.pytest.intersection()
         self.assertEqual(len(intersect), 1)
 
+    def test_3_csv_intersection(self):
+        data_path = get_simple_csv()
+        data_path2 = get_simple_csv2()
+        data_path3 = get_simple_csv3()
+
+        self.pytest.add_csv(data_path)
+        self.pytest.add_csv(data_path2)
+        self.pytest.add_csv(data_path3)
+        intersect = self.pytest.intersection()
+        self.assertEqual(len(intersect), 0)
+
+    def test_3_csv_intersection_one_result(self):
+        data_path = get_simple_csv()
+        data_path2 = get_simple_csv2()
+        data_path3 = get_simple_csv3()
+        self.pytest.add_csv(data_path, [1, 3])
+        self.pytest.add_csv(data_path2, [2, 3])
+        self.pytest.add_csv(data_path3, [2,3])
+        intersect = self.pytest.intersection()
+        self.assertEqual(len(intersect), 1)
+        self.assertEqual(intersect, [("A", "C")])

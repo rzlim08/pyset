@@ -48,10 +48,12 @@ class PySet:
     def read_csv_list(self):
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
 
-    def _intersection(self, csv0, csv1):
+    @staticmethod
+    def _intersection(csv0, csv1):
         return [row for row in csv0 if row in csv1]
 
-    def dedupe(self, csvset):
+    @staticmethod
+    def dedupe(csvset):
         """dedupe but keep order
         https://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-whilst-preserving-order"""
         seen = set()
