@@ -22,12 +22,14 @@ class PySet:
 
     def read_csv(self, path_to_csv):
         """read in csv and subset columns"""
-
-        cols = self.columns[path_to_csv]
+        try:
+            cols = self.columns[path_to_csv]
+        except KeyError:
+            cols = None
         with open(path_to_csv) as csv_file:
             reader = csv.reader(csv_file, delimiter=self.delimiter)
             if cols:
-                csvset = [row[column] for row in reader for column in cols]
+                csvset = [tuple(row[column-1] for column in cols) for row in reader]
             else:
                 csvset = [tuple(row) for row in reader]
 
