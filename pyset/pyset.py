@@ -43,7 +43,7 @@ class PySet:
         csv0 = self.csvs[0]
         for csv1 in self.csvs[1:]:
             csv0 = self._intersection(csv0, csv1)
-        return csv0
+        return self.dedupe(csv0)
 
     def read_csv_list(self):
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
@@ -55,4 +55,6 @@ class PySet:
         """dedupe but keep order
         https://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-whilst-preserving-order"""
         seen = set()
-        seen
+        seen_add = seen.add
+        return [row for row in csvset if not (row in seen or seen_add(row))]
+

@@ -53,5 +53,13 @@ class TestPySet(unittest.TestCase):
         self.pytest.add_csv(data_path3, [1,3])
         intersect = self.pytest.intersection()
         self.assertEqual(len(intersect), 2)
+        self.assertEqual(intersect, [("1", "3"), ("4", "6")])
 
+    def test_csv_columns_dupe_results(self):
+        data_path2 = get_simple_csv2()
+        data_path3 = get_simple_csv3()
+        self.pytest.add_csv(data_path2, [2,3])
+        self.pytest.add_csv(data_path3, [1,3])
+        intersect = self.pytest.intersection()
+        self.assertEqual(len(intersect), 1)
 
