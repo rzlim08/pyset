@@ -1,6 +1,6 @@
 """ Pyset Module"""
 import csv
-
+import argparse
 
 class PySet:
     """Performs set operations on csvs """
@@ -83,3 +83,9 @@ class PySet:
         if return_dupes:
             return seen
         return deduped
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="performs set operations on csvs")
+    parser.add_argument("csvs", nargs="*")
+    print(parser.parse_args())
