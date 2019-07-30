@@ -17,6 +17,7 @@ class PySet:
         self.primary = 0
 
     def add_csv(self, path_to_csv, columns=None):
+        """add csv to class"""
         self.csv_paths.append(path_to_csv)
         self.columns[path_to_csv] = columns
 
@@ -48,12 +49,13 @@ class PySet:
     def union(self):
         """ create union of 2 csvsets"""
         self.csvs = self.read_csv_list()
-        un = []
+        union = []
         for csvset in self.csvs:
-            un.extend(csvset)
-        return self._dedupe(un)
+            union.extend(csvset)
+        return self._dedupe(union)
 
     def complement(self):
+        """compute the complement(not in) of 2 csvs"""
         self.csvs = self.read_csv_list()
         csv0 = self.csvs[0]
         for csv1 in self.csvs[1:]:
@@ -61,17 +63,21 @@ class PySet:
         return csv0
 
     def dedupe(self):
+        """dedupe csvset"""
         return self._dedupe(self.read_csv_list()[0])
 
     def read_csv_list(self):
+        """read in all csvs to csvset"""
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
 
     @staticmethod
     def _complement(csv0, csv1):
+        """compute complement of 2 csvs"""
         return [row for row in csv0 if row not in csv1]
 
     @staticmethod
     def _intersection(csv0, csv1):
+        """compute intersection of 2 csvs"""
         return [row for row in csv0 if row in csv1]
 
     @staticmethod
@@ -87,10 +93,12 @@ class PySet:
 
 
 def add_csv_args(pyset, csv_path, column):
+    """add csv with column mapped from cli arguments"""
     pyset.add_csv(csv_path, list(map(int, column.split(","))))
 
 
 def main(args):
+    """main function"""
     pyset = PySet()
     if args.delimiter:
         pyset.delimiter = args.delimiter
@@ -127,13 +135,13 @@ def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="performs set operations on csvs")
-    parser.add_argument("csvs", nargs="+")
-    parser.add_argument("--columns", nargs="*")
-    parser.add_argument("--operation", nargs="?")
-    parser.add_argument("--delimiter", nargs="?")
+    PARSER = argparse.ArgumentParser(description="performs set operations on csvs")
+    PARSER.add_argument("csvs", nargs="+")
+    PARSER.add_argument("--columns", nargs="*")
+    PARSER.add_argument("--operation", nargs="?")
+    PARSER.add_argument("--delimiter", nargs="?")
 
-    ARGS = parser.parse_args()
+    ARGS = PARSER.parse_args()
     if ARGS.csvs:
         main(ARGS)
     else:
