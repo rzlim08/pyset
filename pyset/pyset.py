@@ -9,13 +9,9 @@ class PySet:
 
     def __init__(self):
         """initialize PySet class"""
-        # Todo: set delimiter
         self.delimiter = ","
-        # Todo: set columns
         self.columns = {}
-        # Todo: set csv paths
         self.csv_paths = []
-        # Todo: set csvs
         self.csvs = []
         # Todo: set primary
         self.primary = 0
@@ -96,6 +92,8 @@ def add_csv_args(pyset, csv_path, column):
 
 def main(args):
     pyset = PySet()
+    if args.delimiter:
+        pyset.delimiter = args.delimiter
 
     if args.columns:
         if len(args.columns) == 1:
@@ -132,11 +130,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="performs set operations on csvs")
     parser.add_argument("csvs", nargs="+")
     parser.add_argument("--columns", nargs="*")
-    parser.add_argument("--operation")
+    parser.add_argument("--operation", nargs="?")
+    parser.add_argument("--delimiter", nargs="?")
 
     ARGS = parser.parse_args()
     if ARGS.csvs:
         main(ARGS)
     else:
         print(ARGS)
-
