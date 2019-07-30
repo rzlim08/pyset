@@ -92,7 +92,9 @@ class TestPySet(unittest.TestCase):
         self.pytest.add_csv(data_path2)
         un = self.pytest.union()
         self.assertEqual(len(un), 7)
-        self.assertEqual([('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'H', 'I'), ('J', 'K', 'L'), ('B', 'A', 'C'), ('1', '2', '3'), ('4', '5', '6')], un)
+        self.assertEqual([('A', 'B', 'C'), ('D', 'E', 'F'),
+                          ('G', 'H', 'I'), ('J', 'K', 'L'), ('B', 'A', 'C'),
+                          ('1', '2', '3'), ('4', '5', '6')], un)
 
     def test_complement(self):
         data_path = get_simple_csv()
