@@ -1,5 +1,6 @@
 """ Pyset Module"""
 import csv
+import argparse
 
 
 class PySet:
@@ -45,7 +46,7 @@ class PySet:
         csv0 = self.csvs[0]
         for csv1 in self.csvs[1:]:
             csv0 = self._intersection(csv0, csv1)
-        return self.dedupe(csv0)
+        return self._dedupe(csv0)
 
     def union(self):
         """ create union of 2 csvsets"""
@@ -53,7 +54,7 @@ class PySet:
         un = []
         for csvset in self.csvs:
             un.extend(csvset)
-        return self.dedupe(un)
+        return self._dedupe(un)
 
     def complement(self):
         self.csvs = self.read_csv_list()
@@ -61,6 +62,9 @@ class PySet:
         for csv1 in self.csvs[1:]:
             csv0 = self._complement(csv0, csv1)
         return csv0
+
+    def dedupe(self):
+        return self._dedupe(self.read_csv_list())
 
     def read_csv_list(self):
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
@@ -74,7 +78,7 @@ class PySet:
         return [row for row in csv0 if row in csv1]
 
     @staticmethod
-    def dedupe(csvset, return_dupes=False):
+    def _dedupe(csvset, return_dupes=False):
         """dedupe but keep order
         https://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-whilst-preserving-order"""
         seen = set()
@@ -83,3 +87,48 @@ class PySet:
         if return_dupes:
             return seen
         return deduped
+
+
+def main(args):
+    pyset = PySet()
+
+    if args.columns:
+        if len(args.columns) == 1:
+            for csv_path in args.csvs:
+                pyset.add_csv(csv_path, args.columns[0])
+        elif len(args.columns) == len(args.csvs):
+            for csv_path, column in zip(args.csvs, args.columns):
+                pyset.add_csv(csv_path, list(map(int, column.split(","))))
+        else:
+            print("Not enough columns")
+    else:
+        for csv_path in args.csvs:
+            pyset.add_csv(csv_path)
+
+    if args.operation == "union":
+        result = pyset.union()
+    elif args.operation == "complement":
+        result = pyset.complement()
+    elif args.operation == "dedupe":
+        if len(args.csvs) > 1:
+            result = pyset.dedupe()
+        else:
+            print("more than one csv, use union instead")
+            result = []
+    else:
+        result = pyset.intersection()
+    for row in result:
+        print(*row, sep=",")
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="performs set operations on csvs")
+    parser.add_argument("csvs", nargs="+")
+    parser.add_argument("--columns", nargs="*")
+    parser.add_argument("--operation")
+
+    ARGS = parser.parse_args()
+    if ARGS.csvs:
+        main(ARGS)
+    else:
+        print(ARGS)
