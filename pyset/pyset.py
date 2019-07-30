@@ -64,7 +64,7 @@ class PySet:
         return csv0
 
     def dedupe(self):
-        return self._dedupe(self.read_csv_list())
+        return self._dedupe(self.read_csv_list()[0])
 
     def read_csv_list(self):
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
@@ -111,12 +111,14 @@ def main(args):
         result = pyset.complement()
     elif args.operation == "dedupe":
         if len(args.csvs) > 1:
-            result = pyset.dedupe()
-        else:
             print("more than one csv, use union instead")
             result = []
-    else:
+        else:
+            result = pyset.dedupe()
+    elif args.operation is None or args.operation == "intersection":
         result = pyset.intersection()
+    else:
+        result = []
     for row in result:
         print(*row, sep=",")
 
