@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """ Pyset Module"""
 import csv
 import argparse
@@ -89,16 +90,20 @@ class PySet:
         return deduped
 
 
+def add_csv_args(pyset, csv_path, column):
+    pyset.add_csv(csv_path, list(map(int, column.split(","))))
+
+
 def main(args):
     pyset = PySet()
 
     if args.columns:
         if len(args.columns) == 1:
             for csv_path in args.csvs:
-                pyset.add_csv(csv_path, args.columns[0])
+                add_csv_args(pyset, csv_path, args.columns[0])
         elif len(args.columns) == len(args.csvs):
             for csv_path, column in zip(args.csvs, args.columns):
-                pyset.add_csv(csv_path, list(map(int, column.split(","))))
+                add_csv_args(pyset, csv_path, column)
         else:
             print("Not enough columns")
     else:
