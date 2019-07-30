@@ -101,3 +101,10 @@ class TestPySet(unittest.TestCase):
         self.pytest.add_csv(data_path2)
         com = self.pytest.complement()
         self.assertEqual(len(com), 3)
+
+    def test_complement_no_results(self):
+        data_path = get_simple_csv()
+        self.pytest.add_csv(data_path)
+        self.pytest.add_csv(data_path)
+        com = self.pytest.complement()
+        self.assertEqual(len(com), 0)
