@@ -66,6 +66,9 @@ class PySet:
         """dedupe csvset"""
         return self._dedupe(self.read_csv_list()[0])
 
+    def get_dupes(self):
+        return self._dedupe(self.read_csv_list()[0], return_dupes=True)
+
     def read_csv_list(self):
         """read in all csvs to csvset"""
         return [self.read_csv(csv_path) for csv_path in self.csv_paths]
@@ -86,10 +89,13 @@ class PySet:
         https://stackoverflow.com/questions/480214/how-do-you-remove-duplicates-from-a-list-whilst-preserving-order"""
         seen = set()
         seen_add = seen.add
-        deduped = [row for row in csvset if not (row in seen or seen_add(row))]
+
         if return_dupes:
-            return seen
-        return deduped
+            deduped = [row for row in csvset if (row in seen or seen_add(row))]
+            return deduped
+        else:
+            deduped = [row for row in csvset if not (row in seen or seen_add(row))]
+            return deduped
 
 
 def add_csv_args(pyset, csv_path, column):
@@ -126,6 +132,12 @@ def main(args):
             result = []
         else:
             result = pyset.dedupe()
+    elif args.operation == "dupes":
+        if len(args.csvs) > 1:
+            print("more than one csv, use union instead")
+            result = []
+        else:
+            result = pyset.get_dupes()
     elif args.operation is None or args.operation == "intersection":
         result = pyset.intersection()
     else:

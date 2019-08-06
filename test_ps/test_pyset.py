@@ -110,3 +110,9 @@ class TestPySet(unittest.TestCase):
         self.pytest.add_csv(data_path)
         com = self.pytest.complement()
         self.assertEqual(len(com), 0)
+
+    def test_get_dupes(self):
+        data_path = get_simple_csv2()
+        self.pytest.add_csv(data_path)
+        dupes = self.pytest.get_dupes()
+        self.assertEqual(len(dupes), 1)
