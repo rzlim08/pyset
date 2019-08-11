@@ -110,3 +110,13 @@ class TestPySet(unittest.TestCase):
         self.pytest.add_csv(data_path)
         com = self.pytest.complement()
         self.assertEqual(len(com), 0)
+
+    def test_intersection_full_output(self):
+        data_path = get_simple_csv()
+        data_path2 = get_simple_csv2()
+        self.pytest.add_csv(data_path, [1, 3])
+        self.pytest.add_csv(data_path2, [2, 3])
+        self.pytest.set_full_output(True)
+        intersect = self.pytest.intersection()
+        self.assertEqual(len(intersect), 1)
+        self.assertEqual(intersect, [("A", "B", "C")])
