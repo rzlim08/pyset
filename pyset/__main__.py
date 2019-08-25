@@ -15,8 +15,9 @@ def main():
     parser.add_argument("--columns", nargs="*")
     parser.add_argument("--operation", nargs="?")
     parser.add_argument("--delimiter", nargs="?")
+    parser.add_argument("--primary", nargs="?")
     parser.add_argument("--full", action="store_true")
-    args= parser.parse_args()
+    args = parser.parse_args()
     pyset = PySet()
     if args.delimiter:
         pyset.delimiter = args.delimiter
@@ -36,6 +37,8 @@ def main():
     else:
         for csv_path in args.csvs:
             pyset.add_csv(csv_path)
+    if args.primary:
+        pyset.set_primary(args.primary)
 
     if args.operation == "union":
         result = pyset.union()

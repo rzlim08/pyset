@@ -42,6 +42,9 @@ class PySet:
 
         return csvset
 
+    def set_primary(self, primary):
+        self.csv_paths.insert(0, self.csv_paths.pop(primary-1))
+
     def intersection(self):
         """
         make intersection of 2 csvsets
