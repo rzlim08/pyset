@@ -120,3 +120,26 @@ class TestPySet(unittest.TestCase):
         intersect = self.pytest.intersection()
         self.assertEqual(len(intersect), 1)
         self.assertEqual(intersect, [("A", "B", "C")])
+
+    def test_set_primary(self):
+        data_path = get_simple_csv()
+        data_path2 = get_simple_csv2()
+        self.pytest.add_csv(data_path, [1, 3])
+        self.pytest.add_csv(data_path2, [2, 3])
+        self.pytest.set_primary(2)
+        complement = self.pytest.complement()
+        self.assertEqual(len(complement), 3)
+        self.assertEqual(complement, [('2', '3'), ('K', 'L'), ('5', '6')])
+
+    def test_set_primary_full(self):
+        data_path = get_simple_csv()
+        data_path2 = get_simple_csv2()
+        self.pytest.add_csv(data_path, [1, 3])
+        self.pytest.add_csv(data_path2, [2, 3])
+        self.pytest.set_primary(2)
+        self.pytest.set_full_output(True)
+        complement = self.pytest.complement()
+        self.assertEqual(len(complement), 3)
+        self.assertEqual(complement, [('1', '2', '3'), ('J', 'K', 'L'), ('4', '5', '6')])
+        """
+        """
