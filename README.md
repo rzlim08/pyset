@@ -4,7 +4,7 @@ A simple package for quick set operations on CSVs.
 
 
 Usage:
-```sh
+```
 pyset <csv1> <csv2> --operation [intersection|complement|union] --columns [numeric] --full
 ```
 
