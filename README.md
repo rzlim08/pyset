@@ -5,7 +5,7 @@ A simple package for quick set operations on CSVs.
 
 Usage:
 ```
-pyset <csv1> <csv2> --operation [intersection|complement|union] --columns [numeric] --full
+pyset <csv1> <csv2> --operation [intersection|subtract|complement|union] --columns [numeric] --full
 ```
 
 Example:

@@ -53,7 +53,7 @@ class PySet:
         csv0 = self.csvs[0]
         for csv1 in self.csvs[1:]:
             csv0 = self._intersection(csv0, csv1)
-        return self._make_result(self._dedupe(csv0), self.full_output)
+        return self._make_result(csv0, self.full_output)
 
     def union(self):
         """ create union of 2 csvsets"""
@@ -64,7 +64,7 @@ class PySet:
             for row in csvset.values():
                 union[ind] = row
                 ind += 1
-        return self._make_result(self._dedupe(union), self.full_output)
+        return self._make_result(union, self.full_output)
 
     def complement(self):
         """compute the complement(not in) of 2 csvs"""
@@ -132,9 +132,9 @@ class PySet:
                 for ind, row in enumerate(reader):
                     if ind in result.keys():
                         csvset[ind] = tuple(row)
-            return [val for val in csvset.values()]
+            return [val for val in self._dedupe(csvset).values()]
         else:
-            return [val for val in result.values()]
+            return [val for val in self._dedupe(result).values()]
 
 
 def add_csv_args(pyset, csv_path, column):
@@ -189,7 +189,7 @@ def main(args):
     else:
         result = []
     for row in result:
-        print(*row, sep=",")
+        print(*row, sep=pyset.delimiter)
 
 
 if __name__ == "__main__":
