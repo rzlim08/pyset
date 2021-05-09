@@ -21,3 +21,11 @@ def get_simple_csv4():
 
 def get_simple_csv5():
     return os.path.join(FILEPATH, "simple5.csv")
+
+
+def get_double_csv1():
+    return os.path.join(FILEPATH, "double1.csv")
+
+
+def get_double_csv2():
+    return os.path.join(FILEPATH, "double2.csv")

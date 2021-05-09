@@ -150,5 +150,3 @@ class TestPySet(unittest.TestCase):
         subtract = self.pytest.subtract()
         self.assertEqual(len(subtract), 3)
         self.assertEqual(subtract, [('1', '2', '3'), ('J', 'K', 'L'), ('4', '5', '6')])
-        """
-        """
