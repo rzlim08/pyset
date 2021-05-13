@@ -65,7 +65,7 @@ def main():
     else:
         result = []
     for row in result:
-        print(*row, sep=",")
+        print(*row, sep=pyset.delimiter)
 
 
 if __name__ == "__main__":
