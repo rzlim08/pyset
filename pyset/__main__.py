@@ -38,7 +38,7 @@ def main():
         for csv_path in args.csvs:
             pyset.add_csv(csv_path)
     if args.primary:
-        pyset.set_primary(args.primary)
+        pyset.set_primary(int(args.primary))
 
     if args.operation == "union":
         result = pyset.union()
